@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat&display=swap' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        html, body {margin: 0; padding: 0; color: #303030; font-family: Montserrat;}
+        div.header {
+            border: 1px solid #00ADEF;
+            width: calc(100% - 2px);
+            display: -webkit-box;
+            height: 60px;
+        }
+        div.date-header {
+            color: #8e8e8e;
+            font-size: 16px;
+            width: 24%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+        }
+        div.desc-header {
+            color: #8e8e8e;
+            font-size: 20px;
+            font-weight: 700;
+            border-left: 1px dashed #00ADEF;
+            border-right: 1px dashed #00ADEF;
+            width: 50%;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+        }
+        div.logo-header {
+            height: 60px;
+            width: 24%;
+        }
+        div.logo-header img {
+
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="date-header">{{ pi.interviewValidated | date('d/m/Y') }}</div>
+    <div class="desc-header">Entretien Professionnel {{ pi.createdAt | date('Y') }}</div>
+    <div class="logo-header">
+        <img src="http://www.flowlinetechnologies.com/wp-content/uploads/2016/04/FLTechnoSCC_bleu.png" alt="Logo FlowLine">
+    </div>
+</div>
+<div style="height: 20px;"></div>
+</body>
+</html>

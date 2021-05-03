@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretien annuel validé{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block validatedInterviews %}active{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien annuel - {{ ai.employee.fullname }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('interview_validated_list') }}">Entretiens validés</a>
+                </li>
+                <li>
+                    <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 1}) }}">Informations</a>
+                </li>
+                <li>
+                    <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 2}) }}">Bilan</a>
+                </li>
+                <li>
+                    <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 3}) }}">Compétences</a>
+                </li>
+                <li class="active">
+                    <strong>Formations</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Formations effectuées dans l'année</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Année</th>
+                                <th>Formation</th>
+                                <th>Début</th>
+                                <th>Fin</th>
+                                <th>Durée</th>
+                                <th>Organisme</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for formationAnnualInterview in ai.formationAnnualInterview %}
+                                <tr>
+                                    <td>{{ formationAnnualInterview.year }}</td>
+                                    <td>{{ formationAnnualInterview.formation }}</td>
+                                    <td>{{ formationAnnualInterview.start }}</td>
+                                    <td>{{ formationAnnualInterview.end }}</td>
+                                    <td>{{ formationAnnualInterview.duration }}</td>
+                                    <td>{{ formationAnnualInterview.organisme }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Evaluation des formations effectuées</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Formation</th>
+                                <th>Appréciation salarié</th>
+                                <th>Commentaire salaire</th>
+                                <th>Appréciation manager</th>
+                                <th>Commentaire manager</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for evalutationFormationAnnualInterview in ai.evaluationFormationAnnualInterviews %}
+                                <tr>
+                                    <td>{{ evalutationFormationAnnualInterview.formation }}</td>
+                                    <td>{{ evalutationFormationAnnualInterview.employeeAppreciation }}</td>
+                                    <td>{{ evalutationFormationAnnualInterview.employeeComment }}</td>
+                                    <td>{{ evalutationFormationAnnualInterview.managerAppreciation }}</td>
+                                    <td>{{ evalutationFormationAnnualInterview.managerComment }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Formation souhaitées</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Type de formation</th>
+                                <th>Description</th>
+                                <th>Demandeur (Salarié / Manager)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for formationDesiredAnnualInterviews in ai.formationDesiredAnnualInterviews %}
+                                <tr>
+                                    <td>{{ formationDesiredAnnualInterviews.formationType }}</td>
+                                    <td>{{ formationDesiredAnnualInterviews.description }}</td>
+                                    <td>{{ formationDesiredAnnualInterviews.applicant }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 5}) }}">
+                                    <button class="btn btn-primary" type="button">Etape suivante</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

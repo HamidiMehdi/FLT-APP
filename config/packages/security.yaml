@@ -1,0 +1,28 @@
+security:
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        my_provider:
+            entity: { class: App:User, property: username }
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            logout:
+                path: /logout
+                target: /login
+            logout_on_user_change: false
+
+            guard:
+                authenticators:
+                    - App\Security\AzureAuthenticator
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/.*, roles: IS_AUTHENTICATED_FULLY }
+        # - { path: ^/profile, roles: ROLE_USER }

@@ -1,0 +1,191 @@
+{% extends 'base.html.twig' %}
+{% import 'interviews/macros/macros.html.twig' as macro %}
+
+{% block title %}Entretien annuel en cours{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block interviewInProgress %}active{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/interviews/ai/ai-p3.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien Annuel - {{ ai.employee.fullname }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('interview_in_progress_list') }}">Entretiens en cours</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p1', {id : ai.id}) }}">Informations</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p2', {id : ai.id}) }}">Bilan</a>
+                </li>
+                <li class="active">
+                    <strong>Compétences</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Legendes</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="control-label">0 = Non évalué</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="control-label">1 = Je n'ai pas la compétence</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="control-label">2 = Notions</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="control-label">3 = Autonome</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="control-label">4 = Confirmé</label>
+                        </div>
+                        <div class="col-sm-12">
+                            <label class="control-label">5 = Au-delà des attentes</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Savoir-être</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="control-label">Libellé de la compétence</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Note</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">Commentaire du collaborateur</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Commentaire du manager</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Action</label>
+                        </div>
+                    </div>
+
+                    <div id="content_know_how">
+                        {% for knowHowForm in form.knowHows %}
+                            {{ macro.know_how_macro(knowHowForm) }}
+                        {% endfor %}
+                    </div>
+
+                    <button type="button" class="btn btn-outline btn-link" id="add_know_how"
+                            data-prototype="{{ macro.know_how_macro(form.knowHows.vars.prototype)|e('html_attr') }}"
+                            data-index="{{ form.knowHows|length }}">
+                        <i class="fa fa-plus"></i> Ajouter un savoir-être
+                    </button>
+
+                    <div class="row margin-top-40">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Note moyenne</label>
+                                {{ form_widget(form.knowHowAvg, {'attr' : {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Savoir-faire</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="control-label">Libellé de la compétence</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Note</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="control-label">Commentaire du collaborateur</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Commentaire du manager</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Action</label>
+                        </div>
+                    </div>
+
+                    <div id="content_know_make">
+                        {% for knowMakeForm in form.knowMakes %}
+                            {{ macro.know_make_macro(knowMakeForm) }}
+                        {% endfor %}
+                    </div>
+
+                    <button type="button" class="btn btn-outline btn-link" id="add_know_make"
+                            data-prototype="{{ macro.know_make_macro(form.knowMakes.vars.prototype)|e('html_attr') }}"
+                            data-index="{{ form.knowMakes|length }}">
+                        <i class="fa fa-plus"></i> Ajouter un savoir-faire
+                    </button>
+
+                    <div class="row margin-top-40">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Note moyenne</label>
+                                {{ form_widget(form.knowMakeAvg, {'attr' : {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Commentaire du manager</label>
+                                {{ form_widget(form.knowMakeComment, {'attr' : {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                {{ form_widget(form.submit,{'label': 'Etape suivante', 'attr': {'class': 'btn btn-primary'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: none">
+                        {{ form_rest(form, {'render_rest': false}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

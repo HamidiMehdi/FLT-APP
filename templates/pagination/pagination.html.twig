@@ -1,0 +1,58 @@
+<div class="dataTables_paginate paging_simple_numbers text-right">
+    <ul class="pagination">
+        <li class="paginate_button previous {% if pagination.current_page == 1 %}disabled{% endif %}" data-page="{{ pagination.current_page - 1 }}">
+            <a>Précedent</a>
+        </li>
+
+        <li class="paginate_button {% if  pagination.current_page == 1 %}disabled active{% endif %}" data-page="1">
+            <a>1</a>
+        </li>
+
+        {% if pagination.current_page > 2 and pagination.current_page - 1 != 2 %}
+        <li class="paginate_button disabled">
+            <a>...</a>
+        </li>
+        {% endif %}
+
+        {% if pagination.current_page > 2 %}
+        <li class="paginate_button" data-page="{{ pagination.current_page - 1 }}">
+            <a>{{ pagination.current_page - 1 }}</a>
+        </li>
+        {% endif %}
+
+        {% if pagination.current_page > 1 and pagination.current_page < pagination.pages %}
+            <li class="paginate_button active disabled">
+                <a>{{ pagination.current_page }}</a>
+            </li>
+        {% endif %}
+
+        {% if pagination.current_page != pagination.pages and pagination.current_page + 1 != pagination.pages %}
+            <li class="paginate_button " data-page="{{ pagination.current_page + 1 }}">
+                <a>{{ pagination.current_page + 1 }}</a>
+            </li>
+        {% endif %}
+
+        {% if pagination.current_page not in [pagination.pages, pagination.pages - 1, pagination.pages - 2] %}
+            <li class="paginate_button disabled">
+                <a>...</a>
+            </li>
+        {% endif %}
+
+        {% if pagination.pages > 1 %}
+            {% if pagination.current_page == pagination.pages %}
+                <li class="paginate_button active disabled">
+                    <a>{{ pagination.pages }}</a>
+                </li>
+            {% else %}
+                <li class="paginate_button" data-page="{{ pagination.pages }}">
+                    <a>{{ pagination.pages }}</a>
+                </li>
+            {% endif %}
+        {% endif %}
+
+        <li class="paginate_button {% if pagination.pages == pagination.current_page %}disabled{% endif %}"
+            {% if pagination.pages != pagination.current_page %}data-page="{{ pagination.current_page + 1 }}"{% endif %}>
+            <a>Suivant</a>
+        </li>
+    </ul>
+</div>

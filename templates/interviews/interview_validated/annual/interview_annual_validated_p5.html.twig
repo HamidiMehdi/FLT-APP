@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretien annuel validé{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block validatedInterviews %}active{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien annuel - {{ ai.employee.fullname }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('interview_validated_list') }}">Entretiens validés</a>
+                </li>
+                <li>
+                    <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 1}) }}">Informations</a>
+                </li>
+                <li>
+                    <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 2}) }}">Bilan</a>
+                </li>
+                <li>
+                    <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 3}) }}">Compétences</a>
+                </li>
+                <li>
+                    <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 4}) }}">Formations</a>
+                </li>
+                <li class="active">
+                    <strong>Objectifs</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Objectifs pour l'année a venir</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Libellé de l'objectif</th>
+                                <th>Objectif à atteindre</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for goalAnnualInterviews in ai.goalAnnualInterviews %}
+                                <tr>
+                                    <td>{{ goalAnnualInterviews.wordingGoal }}</td>
+                                    <td>{{ goalAnnualInterviews.goalAchieve }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 6}) }}">
+                                    <button class="btn btn-primary" type="button">Etape suivante</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

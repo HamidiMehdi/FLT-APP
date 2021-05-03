@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat&display=swap' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        html, body {margin: 0; padding: 0; color: #303030; font-family: Montserrat;}
+        .bar-title-blue {
+            height: 27px;
+            color: #FFFFFF;
+            background-color: #00ADEF;
+            margin-top: 35px;
+            line-height: 27px;
+        }
+        .bar-title-blue span {
+            color: #000000;
+            margin: 0px 25px;
+        }
+        .title-step {
+            color: #1F497D;
+            margin-top: 25px;
+        }
+        .title-step span {
+            color: #0747a6;
+            margin: 0px 25px;
+        }
+        .user-info {
+            margin-top: 30px;
+            padding-left: 25px;
+        }
+        .border-user-info {
+            border: 1px solid #303030;
+            padding: 10px 0px;
+        }
+        .border-user-info div {
+            padding: 0px 10px 10px 10px ;
+        }
+        .border-user-info div:last-child {
+            padding: 0px 10px 0px 10px ;
+        }
+        .second-user-info {
+            margin-top: 40px;
+        }
+        .row-info {
+            padding: 10px 25px ;
+        }
+        .above-tab-title {
+            padding: 35px 25px 10px 25px;
+        }
+        div.table {
+            width: calc(100% - 57px);
+            display: -webkit-box;
+            margin-left: 25px;
+        }
+        div.table div{
+            background-color: #808080;
+            padding: 8px 5px;
+            text-align: center;
+        }
+        div.table div.double, div.content-table div.double {
+            width: 50%;
+        }
+        div.table div.third, div.content-table div.third {
+            width: 33.3%;
+        }
+        div.content-table {
+            width: calc(100% - 57px);
+            display: -webkit-box;
+            margin-left: 25px;
+            border-bottom: 1px solid #808080;
+        }
+        div.content-table div {
+            padding: 8px 5px;
+            text-align: center;
+        }
+        div.res-user {
+            margin-left: 25px;
+        }
+        .margin-top-35 {
+            margin-top: 35px;
+        }
+        .margin-top-20 {
+            margin-top: 20px;
+        }
+        .next-page {
+            page-break-after: always;
+        }
+        img {
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+
+<section>
+    <div class="bar-title-blue"><span>1</span> INFORMATIONS CONCERNANT L'ENTRETIEN</div>
+    <div class="title-step"><span>1.1</span> LE(LA) SALARIE(E)</div>
+
+    <div class="user-info">
+        <div class="border-user-info">
+            <div>Nom du salarié : {{ pi.employee.lastName | capitalize }}</div>
+            <div>Prénom du salarié : {{ pi.employee.lastName | capitalize }}</div>
+            <div>
+                Date de naissance :
+                {% if pi.employee.birthday %}
+                    {{ pi.employee.birthday | date('d/m/Y') }}
+                {% endif %}
+            </div>
+            <div>
+                Date d'entrée :
+                {% if pi.employee.dateEntered %}
+                    {{ pi.employee.dateEntered | date('d/m/Y') }}
+                {% endif %}
+            </div>
+            <div>Intitulé du poste (contrat de travail) : {{ pi.jobTitle }}</div>
+        </div>
+    </div>
+
+    <div class="user-info second-user-info">
+        <div class="border-user-info">
+            <div>Fonction actuelle : {{ pi.currentFunction }}</div>
+            <div>Ancienneté dans la fonction : {{ pi.functionSeniority }}</div>
+            <div>Affection : {{ pi.affectation }}</div>
+            <div>
+                Manager N+1 :
+                {% if pi.manager %}
+                    {{ pi.manager.fullName }}
+                {% endif %}
+            </div>
+            <div>
+                Manager N+2 :
+                {% if pi.secondManage %}
+                    {{ pi.secondManage.fullName }}
+                {% endif %}
+            </div>
+            <div>
+                Manager fonctionnel :
+                {% if managerFunc %}
+                    {{ managerFunc.fullName }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="title-step"><span>1.2</span> ENTRETIEN</div>
+
+    <div class="row-info margin-top-20">Date de l'entretien : {{ pi.interviewValidated | date('d/m/Y') }}</div>
+    <div class="row-info">Mené par : {{ pi.leadBy.fullName }}</div>
+</section>
+
+<div class="next-page"></div>
+
+<section>
+    <div class="bar-title-blue"><span>2</span> PLAN INDIVIDUEL DE DEVELOPPEMENT</div>
+    <div class="title-step"><span>2.1</span> SOUHAITS D'EVOLUTION</div>
+
+    <div class="above-tab-title">Evolutation sur le poste actuel :</div>
+    <div class="table">
+        <div class="double">Détail</div>
+        <div class="double">Délai envisagé</div>
+    </div>
+    <div class="content-table">
+        <div class="double">{{ pi.evolutionCurentPositionDesc }}</div>
+        <div class="double">{{ pi.evolutionCurrentPositionExpectedTime }}</div>
+    </div>
+
+    <div class="above-tab-title">Changement de poste / métier :</div>
+    <div class="table">
+        <div class="double">Détail</div>
+        <div class="double">Délai envisagé</div>
+    </div>
+    <div class="content-table">
+        <div class="double">{{ pi.changePositionDesc }}</div>
+        <div class="double">{{ pi.changePositionExpectedTime }}</div>
+    </div>
+
+    <div class="title-step margin-top-35"><span>2.2</span> PLAN D'ACTIONS ENVISAGE DANS LE CADRE DE CE PROJET</div>
+
+    <div class="above-tab-title">Compétences, connaissances, savoir-faire à acquerir et / ou à développer :</div>
+    <div class="res-user">{{ pi.skills }}</div>
+
+    <div class="above-tab-title">Action envisagées :</div>
+    <div class="res-user">{{ pi.actionEnvisaged }}</div>
+
+    <div class="title-step margin-top-35"><span>2.3</span> FORMATIONS SOUHAITEES DNAS LE CADRE DE CE PROJET</div>
+
+    <div class="above-tab-title">Formation souhaitées dans le cadre de ce projet: {% if pi.formationWishes %}<del>non</del> / oui ?{% else %}non / <del>oui</del> ?{% endif %}</div>
+    <div class="table">
+        <div class="third">Type de formation</div>
+        <div class="third">Description formation</div>
+        <div class="third">Délai envisagé</div>
+    </div>
+    <div class="content-table">
+        <div class="third">{{ pi.formationWishesType }}</div>
+        <div class="third">{{ pi.formationWishesDesc }}</div>
+        <div class="third">{{ pi.formationWishesExpectedTime }}</div>
+    </div>
+
+    <div class="title-step margin-top-35"><span>2.4</span> MOBILITE GEOGRAPHIQUE</div>
+
+    <div class="above-tab-title">Mobilité géographique : {% if pi.geographicMobility %}<del>non</del> / oui ?{% else %}non / <del>oui</del> ?{% endif %}</div>
+    <div class="table">
+        <div class="double">Localisation</div>
+        <div class="double">Délai envisagé</div>
+    </div>
+    <div class="content-table">
+        <div class="double">{{ pi.geographicMobilityLocation }}</div>
+        <div class="double">{{ pi.geographicMobilityExpectedTime }}</div>
+    </div>
+
+    <div class="title-step margin-top-35"><span>2.5</span> MOBILITE GROUPE</div>
+    <div class="table">
+        <div class="double">Localisation</div>
+        <div class="double">Délai envisagé</div>
+    </div>
+    <div class="content-table">
+        <div class="double">{{ pi.groupMobilityLocation }}</div>
+        <div class="double">{{ pi.geographicMobilityExpectedTime }}</div>
+    </div>
+</section>
+
+<div class="next-page"></div>
+
+<section>
+    <div class="bar-title-blue"><span>3</span> SIGNATURES</div>
+    <div class="title-step margin-top-35"><span>3.1</span> MANAGER</div>
+
+    <div class="above-tab-title">Nom du manager :</div>
+    <div class="res-user">{{ pi.leadBy.fullName }}</div>
+
+    <div class="above-tab-title">Avis du manager dans le cadre de ce projet :</div>
+    <div class="res-user">{{ pi.managerOpinion }}</div>
+
+    <div class="above-tab-title">Date et signature : {{ pi.managerDateSignature | date('d/m/Y') }}</div>
+    <img src="{{ pi.managerSignature }}" />
+
+    <div class="title-step margin-top-35"><span>3.1</span> SALARIE</div>
+
+    <div class="above-tab-title">Appréciation du salarié :</div>
+    <div class="res-user">{{ pi.employeeOpinion }}</div>
+
+    <div class="above-tab-title">Date et signature : {{ pi.employeeDateSignature | date('d/m/Y') }}</div>
+    <img src="{{ pi.employeeSignature }}" />
+
+    {% if pi.acceptSecondManager %}
+    <div class="title-step margin-top-35"><span>3.1</span> HIERARCHIQUE N+2 :</div>
+
+    <div class="above-tab-title">Nom du N+2 :</div>
+    <div class="res-user">{% if pi.secondManage %}{{ pi.secondManage.fullName }}{% endif %}</div>
+
+    <div class="above-tab-title">Date et signature : {{ pi.secondManagerDateSignature | date('d/m/Y') }}</div>
+    <img src="{{ pi.secondManagerSignature }}" />
+    {% endif %}
+</section>
+
+</body>
+</html>

@@ -1,0 +1,219 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretiens{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block addShowInterviews %}active{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/interviews/pagination/paginationHandler.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Mes entretiens</h2>
+            <ol class="breadcrumb">
+                <li class="active">
+                    <strong>Entretiens</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    {# bloc creation d'entretien #}
+    {% if currentPi is null or currentAi is null %}
+        <div class="row">
+            {% if currentPi is null %}
+                <div class="col-md-6">
+                    <a href="{{ path('interview_pro_p1') }}" class="color-body cart-new-interview">
+                        <div class="payment-card">
+                            <i class="fa fa-file-text payment-icon-big"></i>
+                            <h2>
+                                Créer un entretien professionnel
+                            </h2>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <small>
+                                        <strong>Date:</strong> {{ date()|date('d/m/Y') }}
+                                    </small>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <small>
+                                        <strong>Nom:</strong> {{ app.user.firstname }} {{ app.user.lastname }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+            {% if currentAi is null %}
+                <div class="col-md-6">
+                    <a href="{{ path('interview_annual_p1') }}" class="color-body">
+                        <div class="payment-card">
+                            <i class="fa fa-file-text-o payment-icon-big"></i>
+                            <h2>
+                                Créer un entretien annuels
+                            </h2>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <small>
+                                        <strong>Date:</strong> {{ date()|date('d/m/Y') }}
+                                    </small>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <small>
+                                        <strong>Nom:</strong> {{ app.user.firstname }} {{ app.user.lastname }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if currentPi or currentAi %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-title">Vos entretiens {{ date() | date('Y') }}</div>
+                    <div class="ibox-content">
+                        <div class="panel-group payments-method">
+                            {% if currentPi %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="pull-right">
+                                            {% if currentPi.interviewValidated is null %}
+                                                <a href="{{ path('interview_pro_p1') }}?pi_id={{ currentPi.id }}">
+                                                    <button class="btn-link" type="button">Modifier</button>
+                                                </a>
+                                            {% else %}
+                                                <span class="label label-primary">Entretien validé</span>
+                                            {% endif %}
+                                        </div>
+                                        <h5 class="panel-title">
+                                            Votre entretien professionnel |
+                                            Crée le {{ currentPi.createdAt | date('d/m/Y') }}
+                                            {% if currentPi.interviewValidated is not null %}
+                                                | Validé le {{ currentPi.interviewValidated | date('d/m/Y') }}
+                                                par {{ currentPi.leadBy.fullname }}
+                                            {% endif %}
+                                        </h5>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if currentAi %}
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="pull-right">
+                                            {% if currentAi.interviewValidated is null %}
+                                                <a href="{{ path('interview_annual_p1') }}?ai_id={{ currentAi.id }}">
+                                                    <button class="btn-link" type="button">Modifier</button>
+                                                </a>
+                                            {% else %}
+                                                <span class="label label-primary">Entretien validé</span>
+                                            {% endif %}
+                                        </div>
+                                        <h5 class="panel-title">
+                                            Votre entretien annuel |
+                                            Crée le {{ currentAi.createdAt | date('d/m/Y') }}
+                                            {% if currentAi.interviewValidated is not null %}
+                                                | Validé le {{ currentAi.interviewValidated | date('d/m/Y') }}
+                                                par {{ currentAi.leadBy.fullname }}
+                                            {% endif %}
+                                        </h5>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {# array #}
+    <div class="row margin-bottom-30">
+        <div id="url_data_interview" data-url="{{ path('interview_search') }}"></div>
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Vos entretiens validés</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="clients-list">
+                        <ul class="nav nav-tabs nav-tab-interview">
+                            <li class="active" data-nav="professional">
+                                <a data-toggle="tab">
+                                    <i class="fa fa-file-text"></i> Entretien professionnel
+                                </a>
+                            </li>
+                            <li data-nav="annual">
+                                <a data-toggle="tab">
+                                    <i class="fa fa-file-text-o"></i> Entretien annuel
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" data-nav="professional" style="height: auto;">
+                                <div class="margin-top-20">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <input type="text" data-nav="professional" placeholder="Rechercher ..." class="input-sm form-control search-array">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-sm btn-primary">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        {% include 'interviews/interview/partial/pro_interview.html.twig' with {
+                                            'data' : proInterview.data,
+                                            'pagination' : proInterview.pagination
+                                        } %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" data-nav="annual" style="height: auto;">
+                                <div class="margin-top-20">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="input-group">
+                                                <input type="text" data-nav="annual" placeholder="Rechercher ..." class="input-sm form-control search-array">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-sm btn-primary">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        {% include 'interviews/interview/partial/annual_interview.html.twig' with {
+                                            'data' : annualInterview.data,
+                                            'pagination' : annualInterview.pagination
+                                        } %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

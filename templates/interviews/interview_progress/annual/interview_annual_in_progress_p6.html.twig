@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+{% import 'interviews/macros/macros.html.twig' as macro %}
+
+{% block title %}Entretien annuel en cours{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block interviewInProgress %}active{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/interviews/interview_progress/ai_in_progress.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien Annuel - {{ ai.employee.fullname }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('interview_in_progress_list') }}">Entretiens en cours</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p1', {id : ai.id}) }}">Informations</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p2', {id : ai.id}) }}">Bilan</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p3', {id : ai.id}) }}">Compétences</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p4', {id : ai.id}) }}">Formations</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p5', {id : ai.id}) }}">Objectifs</a>
+                </li>
+                <li class="active">
+                    <strong>Signature</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Manager</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Nom du manager</label>
+                                <input type="text" value="{{ app.user.fullname }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Appréciation du manager</label>
+                                {{ form_widget(form.managerOpigion, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_widget(form.managerSignature) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date de signature</label>
+                                <input type="text" value="{{ dateNow | date('d/m/Y') }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Signature</label>
+                                <div class="signature-zone">
+                                    <canvas id="canvas" width="400" height="175"></canvas>
+                                </div>
+                                <div class="error-field-txt">La signature est obligatoire</div>
+                                <a class="btn btn-default btn-facebook btn-outline" id="clear_canvas">
+                                    <i class="fa fa-edit"> </i> Effacer la signature
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Salarié</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Appréciation du salarié</label>
+                                {{ form_widget(form.employeeOpinion, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date de signature</label>
+                                <input type="text" value="{{ ai.employeeDateSignature | date('d/m/Y') }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="signature_employee">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Signature</label>
+                                <img class="img-responsive" src="{{ ai.employeeSignature }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Refus de signature :
+                                    <label class="switch">
+                                        {{ form_widget(form.refuseSignature) }}
+                                        <span class="slider"></span>
+                                    </label>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: none">
+                        {{ form_rest(form, {'render_rest': false}) }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                <button id="open_modal_ai" type="button" class="btn btn-primary right">Valider l'entretien</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# modal validation entretien #}
+    <div class="modal inmodal fade" id="modal_validation_interview" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">Fermer</span></button>
+                    <h4 class="modal-title">Valider l'entretien</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Vous êtes sur le point de valider cet entretien.</p>
+                    <p>
+                        Il est recommandé de renseigner la <strong>totalité</strong> des informations demandées pour
+                        le bon déroulement de l'entretien.
+                    </p>
+                    <p>Une fois cet entretien validé, vous ne pourrez plus le modifier.</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Retour</button>
+                    <button type="button" class="btn btn-primary" id="validation_interview">Valider</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

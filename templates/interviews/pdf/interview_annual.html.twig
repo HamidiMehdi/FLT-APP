@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat&display=swap' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        html, body {margin: 0; padding: 0; color: #303030; font-family: Montserrat;}
+        .bar-title-blue {
+            height: 27px;
+            color: #FFFFFF;
+            background-color: #00ADEF;
+            margin-top: 35px;
+            line-height: 27px;
+        }
+        .bar-title-blue span {
+            color: #000000;
+            margin: 0px 25px;
+        }
+        .title-step {
+            color: #1F497D;
+            margin-top: 25px;
+        }
+        .title-step span {
+            color: #0747a6;
+            margin: 0px 25px;
+        }
+        .user-info {
+            margin-top: 30px;
+            padding-left: 25px;
+        }
+        .border-user-info {
+            border: 1px solid #303030;
+            padding: 10px 0px;
+        }
+        .border-user-info div {
+            padding: 0px 10px 10px 10px ;
+        }
+        .border-user-info div:last-child {
+            padding: 0px 10px 0px 10px ;
+        }
+        .second-user-info {
+            margin-top: 40px;
+        }
+        .row-info {
+            padding: 10px 25px ;
+        }
+        .above-tab-title {
+            padding: 35px 25px 10px 25px;
+        }
+        div.table {
+            width: calc(100% - 57px);
+            display: -webkit-box;
+            margin-left: 25px;
+        }
+        div.table div{
+            background-color: #808080;
+            padding: 8px 5px;
+            text-align: center;
+        }
+        div.table div.double, div.content-table div.double {
+            width: 50%;
+        }
+        div.table div.third, div.content-table div.third {
+            width: 33.3%;
+        }
+        div.table div.fourth, div.content-table div.fourth {
+             width: 24%;
+        }
+        div.table div.fifth, div.content-table div.fifth {
+            width: 19%;
+        }
+        div.table div.sixth, div.content-table div.sixth {
+            width: 15.8%;
+        }
+        div.content-table {
+            width: calc(100% - 57px);
+            display: -webkit-box;
+            margin-left: 25px;
+            border-bottom: 1px solid #808080;
+        }
+        div.content-table div {
+            padding: 8px 5px;
+            text-align: center;
+        }
+        div.res-user {
+            margin-left: 25px;
+            margin-bottom: 5px;
+        }
+        .margin-top-35 {
+            margin-top: 35px;
+        }
+        .margin-top-20 {
+             margin-top: 20px;
+         }
+        .next-page {
+            page-break-after: always;
+        }
+        img {
+            width: 250px;
+        }
+        div.header-table {
+            background-color: #C6D9F1;
+            text-align: center;
+            width: calc(100% - 57px);
+            margin-left: 25px;
+            min-height: 30px;
+            line-height: 30px;
+            font-weight: 700;
+        }
+        .legende {
+            padding: 3px 25px;
+            font-family: Montserrat-Medium;
+            color: #303030;
+            font-size: 14px;
+        }
+        div.margin-bottom-30 {
+            margin-bottom: 30px;
+        }
+        div.margin-top-30 {
+            margin-top: 30px;
+        }
+        div.highlighted {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<section>
+    <div class="bar-title-blue"><span>1</span> INFORMATIONS CONCERNANT L'ENTRETIEN</div>
+    <div class="title-step"><span>1.1</span> LE(LA) SALARIE(E)</div>
+
+    <div class="user-info">
+        <div class="border-user-info">
+            <div>Nom du salarié : {{ ai.employee.lastName | capitalize }}</div>
+            <div>Prénom du salarié : {{ ai.employee.lastName | capitalize }}</div>
+            <div>
+                Date de naissance :
+                {% if ai.employee.birthday %}
+                    {{ ai.employee.birthday | date('d/m/Y') }}
+                {% endif %}
+            </div>
+            <div>
+                Date d'entrée :
+                {% if ai.employee.dateEntered %}
+                    {{ ai.employee.dateEntered | date('d/m/Y') }}
+                {% endif %}
+            </div>
+            <div>Intitulé du poste (contrat de travail) : {{ ai.jobTitle }}</div>
+        </div>
+    </div>
+
+    <div class="user-info second-user-info">
+        <div class="border-user-info">
+            <div>Fonction actuelle : {{ ai.currentFunction }}</div>
+            <div>Ancienneté dans la fonction : {{ ai.functionSeniority }}</div>
+            <div>Affection : {{ ai.affectation }}</div>
+            <div>
+                Manager N+1 :
+                {% if ai.manager %}
+                    {{ ai.manager.fullName }}
+                {% endif %}
+            </div>
+            <div>
+                Manager N+2 :
+                {% if secondManager %}
+                    {{ secondManager.fullName }}
+                {% endif %}
+            </div>
+            <div>
+                Manager fonctionnel :
+                {% if managerFunc %}
+                    {{ managerFunc.fullName }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="title-step"><span>1.2</span> ENTRETIEN</div>
+
+    {% if prevAi %}
+        <div class="row-info margin-top-20">Date du précédent entretien annual : {{ prevAi.interviewValidated | date('d/m/Y') }}</div>
+        <div class="row-info">Mené par : {{ ai.interviewValidated }}</div>
+        <div class="row-info">Evaluation précédente : A voir dans le dossier personnel du collaborateur</div>
+    {% else %}
+        <div class="row-info margin-top-20">Date du précédent entretien annual : Aucun entretien précédent n'a été fait</div>
+        <div class="row-info">Mené par : Aucun entretien précédent n'a été fait</div>
+        <div class="row-info">Evaluation précédente : Aucun entretien précédent n'a été fait</div>
+    {% endif %}
+
+    <div class="row-info" style="margin-top: 35px;">Date de l'entretien : {{ ai.interviewValidated | date('d/m/Y') }}</div>
+    <div class="row-info">Mené par : {{ ai.leadBy.fullName }}</div>
+</section>
+
+<div class="next-page"></div>
+
+<section>
+    <div class="bar-title-blue"><span>2</span> BILAN</div>
+    <div class="title-step"><span>2.1</span> REALISATIONS DE L'ANNEE ECOULEE (OBJECTIFS, MISSION) ET COMMENTAIRES</div>
+
+    <div class="table margin-top-20">
+        <div class="fourth">Attendus, Réalsation, Acquis</div>
+        <div class="fourth">Note</div>
+        <div class="fourth">Commentaire collaborateur</div>
+        <div class="fourth">Commentaire manager</div>
+    </div>
+    {% for bilan in ai.bilans %}
+    <div class="content-table">
+        <div class="fourth">{{ bilan.achievement }}</div>
+        <div class="fourth">{{ bilan.grade }}</div>
+        <div class="fourth">{{ bilan.commentCollab }}</div>
+        <div class="fourth">{{ bilan.commentManager }}</div>
+    </div>
+    {% endfor %}
+
+    <div class="row-info margin-top-20">Note :</div>
+    <div class="res-user">{{ ai.bilanAvg }}</div>
+
+    <div class="title-step"><span>2.2</span> ENVIRONNEMENT DE TRAVAIL</div>
+
+    <div class="row-info margin-top-20">Commentaire du collaborateur :</div>
+    <div class="res-user">{{ ai.commentCollabWorkingEnv }}</div>
+
+    <div class="row-info margin-top-20">Commentaire du manager :</div>
+    <div class="res-user">{{ ai.commentManagerWorkingEnv }}</div>
+
+    <div class="title-step"><span>2.3</span> POINTS FORTS</div>
+
+    <div class="row-info margin-top-20">Commentaire du manager :</div>
+    <div class="res-user">{{ ai.commentManagerStrongPoints }}</div>
+
+    <div class="title-step"><span>2.4</span> AXES D'AMELIORATION</div>
+
+    <div class="row-info margin-top-20">Commentaire du collaborateur :</div>
+    <div class="res-user">{{ ai.commentCollabImprovement }}</div>
+
+    <div class="row-info margin-top-20">Commentaire du manager :</div>
+    <div class="res-user">{{ ai.commentManagerImprovement }}</div>
+</section>
+
+<div class="next-page"></div>
+
+<section>
+    <div class="bar-title-blue"><span>3</span> COMPETENCES, APTITUDES</div>
+
+    <div class="legende highlighted margin-top-30">Légendes : </div>
+    <div class="legende">0 = non évalué</div>
+    <div class="legende">1 = Je n'ai pas la compétence</div>
+    <div class="legende">2 = Notions</div>
+    <div class="legende">3 = Autonome</div>
+    <div class="legende">4 = Confirmé</div>
+    <div class="legende margin-bottom-30">5 = Au-delà des attentes</div>
+
+    <div class="header-table margin-top-35">SAVOIR-ETRE</div>
+    <div class="table">
+        <div class="fourth">Libellé de la compétence</div>
+        <div class="fourth">Note</div>
+        <div class="fourth">Commentaire collaborateur</div>
+        <div class="fourth">Commentaire manager</div>
+    </div>
+    {% for knowHow in ai.knowHows %}
+        <div class="content-table">
+            <div class="fourth">{{ knowHow.wordingSkill }}</div>
+            <div class="fourth">{{ knowHow.grade }}</div>
+            <div class="fourth">{{ knowHow.collabComment }}</div>
+            <div class="fourth">{{ knowHow.managerComment }}</div>
+        </div>
+    {% endfor %}
+
+    <div class="row-info margin-top-20">Note moyenne :</div>
+    <div class="res-user">{{ ai.knowHowAvg }}</div>
+
+    <div style="height: 50px;"></div>
+
+    <div class="header-table">SAVOIR-FAIRE</div>
+    <div class="table">
+        <div class="fourth">Libellé de la compétence</div>
+        <div class="fourth">Note</div>
+        <div class="fourth">Commentaire collaborateur</div>
+        <div class="fourth">Commentaire manager</div>
+    </div>
+    {% for knowMake in ai.knowMakes %}
+        <div class="content-table">
+            <div class="fourth">{{ knowMake.wordingSkill }}</div>
+            <div class="fourth">{{ knowMake.grade }}</div>
+            <div class="fourth">{{ knowMake.collabComment }}</div>
+            <div class="fourth">{{ knowMake.managerComment }}</div>
+        </div>
+    {% endfor %}
+
+    <div class="row-info margin-top-20">Note moyenne :</div>
+    <div class="res-user">{{ ai.knowMakeAvg }}</div>
+
+    <div class="row-info margin-top-20">Commentaire du manager :</div>
+    <div class="res-user">{{ ai.knowMakeComment }}</div>
+</section>
+
+<div class="next-page"></div>
+
+<section>
+    <div class="bar-title-blue"><span>4</span> FORMATIONS</div>
+    <div class="title-step"><span>4.1</span> FORMATIONS EFFECTUEES DANS L'ANNEE</div>
+
+    <div class="table margin-top-35">
+        <div class="sixth">Année</div>
+        <div class="sixth">Formation</div>
+        <div class="sixth">Début</div>
+        <div class="sixth">Fin</div>
+        <div class="sixth">Durée</div>
+        <div class="sixth">Organisme</div>
+    </div>
+    {% for formation in ai.formationAnnualInterview %}
+        <div class="content-table">
+            <div class="sixth">{{ formation.year }}</div>
+            <div class="sixth">{{ formation.formation }}</div>
+            <div class="sixth">{{ formation.start }}</div>
+            <div class="sixth">{{ formation.end }}</div>
+            <div class="sixth">{{ formation.duration }}</div>
+            <div class="sixth">{{ formation.organisme }}</div>
+        </div>
+    {% endfor %}
+
+    <div class="title-step margin-top-35"><span>4.2</span> EVALUATION DES FORMATIONS EFFECTUEES</div>
+
+    <div class="table margin-top-35">
+        <div class="fifth">Formation</div>
+        <div class="fifth">Appréciation salarié</div>
+        <div class="fifth">Commentaire salarié</div>
+        <div class="fifth">Appréciation manager</div>
+        <div class="fifth">Commentaire manager</div>
+    </div>
+    {% for evaluation in ai.evaluationFormationAnnualInterviews %}
+        <div class="content-table">
+            <div class="fifth">{{ evaluation.formation }}</div>
+            <div class="fifth">{{ evaluation.employeeAppreciation }}</div>
+            <div class="fifth">{{ evaluation.employeeComment }}</div>
+            <div class="fifth">{{ evaluation.managerAppreciation }}</div>
+            <div class="fifth">{{ evaluation.managerComment }}</div>
+        </div>
+    {% endfor %}
+
+    <div class="title-step margin-top-35"><span>4.3</span> FORMATIONS SOUHAITEES</div>
+
+    <div class="table margin-top-35">
+        <div class="third">Type de formation</div>
+        <div class="third">Description</div>
+        <div class="third">Demandeur (salarié / manager)</div>
+    </div>
+    {% for formationDesired in ai.formationDesiredAnnualInterviews %}
+        <div class="content-table">
+            <div class="third">{{ formationDesired.formationType }}</div>
+            <div class="third">{{ formationDesired.description }}</div>
+            <div class="third">{{ formationDesired.applicant }}</div>
+        </div>
+    {% endfor %}
+</section>
+
+<div class="next-page"></div>
+
+<section>
+    <div class="bar-title-blue"><span>5</span> OBJECTIFS POUR L'ANNEE A VENIR</div>
+
+    <div class="table margin-top-35">
+        <div class="double">Libellé de l'objectif</div>
+        <div class="double">Objectif à atteindre</div>
+    </div>
+    {% for goal in ai.goalAnnualInterviews %}
+        <div class="content-table">
+            <div class="double">{{ goal.wordingGoal }}</div>
+            <div class="double">{{ goal.goalAchieve }}</div>
+        </div>
+    {% endfor %}
+</section>
+
+<div class="next-page"></div>
+
+<section>
+    <div class="bar-title-blue"><span>6</span> SIGNATURES</div>
+    <div class="title-step"><span>6.1</span> MANAGER</div>
+
+    <div class="above-tab-title">Nom du manager :</div>
+    <div class="res-user">{{ ai.leadBy.fullName }}</div>
+
+    <div class="above-tab-title">Appréciation du manager :</div>
+    <div class="res-user">{{ ai.managerOpigion }}</div>
+
+    <div class="above-tab-title">Date et signature : {{ ai.managerDateSignature | date('d/m/Y') }}</div>
+    <img src="{{ ai.managerSignature }}" />
+
+    <div class="title-step margin-top-20"><span>6.1</span> SALARIE</div>
+
+    <div class="above-tab-title">Appréciation du salarié :</div>
+    <div class="res-user">{{ ai.employeeOpinion }}</div>
+
+    {% if ai.refuseSignature %}
+        <div class="above-tab-title">Date et signature : Refus de signature</div>
+    {% else %}
+        <div class="above-tab-title">Date et signature : {{ ai.employeeDateSignature | date('d/m/Y') }}</div>
+        <img src="{{ ai.employeeSignature }}" />
+    {% endif %}
+</section>
+
+</body>
+</html>

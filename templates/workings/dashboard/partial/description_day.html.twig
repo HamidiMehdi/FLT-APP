@@ -1,0 +1,50 @@
+<div id="description_day">
+    <div style="margin-bottom: 10px;">
+        <strong>Date : </strong> {{ date|date('d/m/Y') }} {% if date|date('d/m/Y') == date()|date('d/m/Y') %}(aujourd'hui){% endif %}
+    </div>
+
+    {% if descriptionDay.locationsCounter|length %}
+        <strong>Localisation :</strong>
+        <ul class="task-list">
+            {% for location in descriptionDay.locationsCounter %}
+                <li>
+                    {{ location.location|lower|capitalize }} : {{ location.counter }} TT
+                    {% if descriptionDay.userCounterPerLocation[location.location] is defined %}
+                        {% set counter = descriptionDay.userCounterPerLocation[location.location] %}
+                    ({{ counter }} {{ counter <= 1 ? 'collaborateur' : 'collaborateurs'}})
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        {% if descriptionDay.workingsSplit.DAY|length %}
+            <strong>Journée ({{ descriptionDay.workingsSplit.DAY|length }} {{ descriptionDay.workingsSplit.DAY|length <= 1 ? 'collaborateur' : 'collaborateurs' }}):</strong>
+            <ul class="task-list">
+                {% for working in descriptionDay.workingsSplit.DAY %}
+                    <li>{{ working.employee.fullname }} ({{ working.employee.location|lower|capitalize }})</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if descriptionDay.workingsSplit.AM|length %}
+            <strong>Matin ({{ descriptionDay.workingsSplit.AM|length }} {{ descriptionDay.workingsSplit.AM|length <= 1 ? 'collaborateur' : 'collaborateurs' }}):</strong>
+            <ul class="task-list">
+                {% for working in descriptionDay.workingsSplit.AM %}
+                    <li>{{ working.employee.fullname }} ({{ working.employee.location|lower|capitalize }})</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if descriptionDay.workingsSplit.PM|length %}
+            <strong>Après-midi ({{ descriptionDay.workingsSplit.PM|length }} {{ descriptionDay.workingsSplit.PM|length <= 1 ? 'collaborateur' : 'collaborateurs' }}):</strong>
+            <ul class="task-list">
+                {% for working in descriptionDay.workingsSplit.PM %}
+                    <li>{{ working.employee.fullname }} ({{ working.employee.location|lower|capitalize }})</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    {% else %}
+        <div>Aucun TT n'a été trouvé</div>
+    {% endif %}
+</div>

@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretien professionnel validé{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block validatedInterviews %}active{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien professionnel - {{ pi.employee.fullname }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('interview_validated_list') }}">Entretiens validés</a>
+                </li>
+                <li>
+                    <a href="{{ path('show_interview_pro_validated', {id : pi.id, step: 1}) }}">Informations</a>
+                </li>
+                <li>
+                    <a href="{{ path('show_interview_pro_validated', {id : pi.id, step: 2}) }}">Plan individuel</a>
+                </li>
+                <li class="active">
+                    <strong>Signature</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Manager</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Nom du manager</label>
+                                <input type="text" value="{{ pi.leadBy.fullname }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Avis du manager dans le cadre de ce projet</label>
+                                <textarea class="form-control" disabled>{{ pi.managerOpinion }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date de signature</label>
+                                <input type="text" value="{{ pi.managerDateSignature ? pi.managerDateSignature|date('d/m/Y') : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Signature</label>
+                                <img class="img-responsive" src="{{ pi.managerSignature }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Salarié</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Appréciation du salarié</label>
+                                <textarea class="form-control" disabled>{{ pi.employeeOpinion }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date de signature</label>
+                                <input type="text" value="{{ pi.employeeDateSignature ? pi.employeeDateSignature|date('d/m/Y') : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Signature</label>
+                                <img class="img-responsive" src="{{ pi.employeeSignature }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>
+                        Hiérarchique N+2
+                        <label class="switch">
+                            <input type="checkbox" {% if pi.acceptSecondManager %}checked{% endif %} disabled>
+                            <span class="slider"></span>
+                        </label>
+                    </h5>
+                </div>
+                <div class="ibox-content">
+                    {% if pi.acceptSecondManager %}
+                    <div id="display_second_manager">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Nom du N+2</label>
+                                    <input type="text" value="{{ pi.secondManage ? pi.secondManage.fullname : '' }}" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Date de signature</label>
+                                    <input type="text" value="{{ pi.secondManagerDateSignature ? pi.secondManagerDateSignature|date('d/m/Y') : '' }}" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Signature</label>
+                                    <img class="img-responsive" src="{{ pi.secondManagerSignature }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                <a href="{{ path('interview_validated_list') }}">
+                                    <button class="btn btn-primary" type="button">Revenir à la liste</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

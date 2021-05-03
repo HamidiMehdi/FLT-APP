@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretien professionnel{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block addShowInterviews %}active{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/datepicker/datepicker.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('plugins/datepicker/datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/datepicker.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien professionnel</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('choice_interviews') }}">Vos entretiens</a>
+                </li>
+                <li class="active">
+                    <strong>Informations</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    {# form #}
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Informations</h5>
+                </div>
+                <div class="ibox-content">
+                    {{ form_start(form) }}
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Nom du salairé</label>
+                                <input type="text" value="{{ app.user.lastname }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Prénom du salairé</label>
+                                <input type="text" value="{{ app.user.firstname }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date de naissance</label>
+                                {{ form_widget(form.birthday, {
+                                    value : app.user.birthday ? app.user.birthday|date('d/m/Y') : '',
+                                    attr: {class: 'flt-datepicker form-control', autocomplete: "off"}
+                                }) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date d'entrée</label>
+                                {{ form_widget(form.dateEntered, {
+                                    value : app.user.dateEntered ? app.user.dateEntered|date('d/m/Y') : '',
+                                    attr: {class: 'flt-datepicker form-control', autocomplete: "off"}
+                                }) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Intitulé de poste (contrat de travail)</label>
+                                {{ form_widget(form.jobTitle, {'attr' : {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Fonction actuelle</label>
+                                {{ form_widget(form.currentFunction, {'attr' : {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Ancienneté dans la fonction</label>
+                                {{ form_widget(form.functionSeniority, {'attr' : {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Affectation</label>
+                                {{ form_widget(form.affectation, {'attr' : {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Manager N+1</label>
+                                <input type="text" value="{{  firstManager ? firstManager.fullName : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Manager N+2</label>
+                                <input type="text" value="{{  secondManager ? secondManager.fullName : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Manager fonctionnel</label>
+                                <input type="text" value="{{  managerFunc ? managerFunc.fullName : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                {{ form_widget(form.submit,{'label': 'Etape suivante', 'attr': {'class': 'btn btn-primary'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: none">
+                        {{ form_rest(form, {'render_rest': false}) }}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

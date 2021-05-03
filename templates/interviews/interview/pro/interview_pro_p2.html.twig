@@ -1,0 +1,196 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretien professionnel{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block addShowInterviews %}active{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/interviews/pi/pi-p2.js') }}"></script>
+{% endblock %}
+
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien professionnel</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('choice_interviews') }}">Vos entretiens</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_pro_p1') }}?pi_id={{ pi.id }}">Informations</a>
+                </li>
+                <li class="active">
+                    <strong>Plan individuel</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    {# form #}
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Plan individuel</h5>
+                </div>
+                <div class="ibox-content">
+                    {{ form_start(form) }}
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Evolution sur poste actuel (détail)</label>
+                                {{ form_widget(form.evolutionCurentPositionDesc, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Evolution sur poste actuel (délai envisagé)</label>
+                                {{ form_widget(form.evolutionCurrentPositionExpectedTime, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Changement de poste/metier (détail)</label>
+                                {{ form_widget(form.changePositionDesc, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Changement de poste/metier (délai envisagé)</label>
+                                {{ form_widget(form.changePositionExpectedTime, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Compétences, connaissances, savoir-faire à acquérir et/ou à développer</label>
+                                {{ form_widget(form.skills, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Actions envisagées</label>
+                                {{ form_widget(form.actionEnvisaged, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="control-label">Formation souhaitées dans le cadre de ce projet :</label>
+                            <label class="switch">
+                                {{ form_widget(form.formationWishes) }}
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="formation-wishes" {% if pi.formationWishes == true %}style="display: block" {% endif %}>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Type de formation</label>
+                                    {{ form_widget(form.formationWishesType, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Description formation</label>
+                                    {{ form_widget(form.formationWishesDesc, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Délai envisagé</label>
+                                    {{ form_widget(form.formationWishesExpectedTime, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="control-label">Mobilité géographique :</label>
+                            <label class="switch">
+                                {{ form_widget(form.geographicMobility) }}
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="geographic-mobility" {% if pi.geographicMobility == true %}style="display: block" {% endif %}>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Mobilité géographique (localisation)</label>
+                                    {{ form_widget(form.geographicMobilityLocation, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Mobilité géographique (délai envisagé)</label>
+                                    {{ form_widget(form.geographicMobilityExpectedTime, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Mobilité groupe (localisation)</label>
+                                {{ form_widget(form.groupMobilityLocation, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Mobilité groupe (délai envisagé)</label>
+                                {{ form_widget(form.groupMobilityExpectedTime, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                {{ form_widget(form.submit,{'label': 'Etape suivante', 'attr': {'class': 'btn btn-primary'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

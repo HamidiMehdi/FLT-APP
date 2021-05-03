@@ -1,0 +1,370 @@
+{% macro bilan_macro(form) %}
+    <div class="row macro-bilan">
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_widget(form.achievement,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Attendus Réalisations Acquis'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.grade,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Note'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_widget(form.commentCollab,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Commentaire du collaborateur'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.commentManager,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Commentaire du manager'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <button class="btn btn-default btn-circle remove-bilan" type="button">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+{% endmacro %}
+
+{% macro know_how_macro(form) %}
+    <div class="row macro-know-how">
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_widget(form.wordingSkill,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Libellé de la compétence'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.grade,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Note'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_widget(form.collabComment,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Commentaire du collaborateur'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.managerComment,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Commentaire du manager'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <button class="btn btn-default btn-circle remove-kow-how" type="button">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+{% endmacro %}
+
+{% macro know_make_macro(form) %}
+    <div class="row macro-know-make">
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_widget(form.wordingSkill,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Libellé de la compétence'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.grade,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Note'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_widget(form.collabComment,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Commentaire du collaborateur'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.managerComment,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Commentaire du manager'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <button class="btn btn-default btn-circle remove-kow-make" type="button">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+{% endmacro %}
+
+{% macro formation_annual_interview_macro(form) %}
+    <div class="row macro-formation-annual-interview">
+        <div class="col-md-1">
+            <div class="form-group">
+                {{ form_widget(form.year,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Année'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.formation,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Formation'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.start,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Début'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.end,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Fin'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.duration,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Durée'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.organisme,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Organisme'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <button class="btn btn-default btn-circle remove-formation-annual-interview" type="button">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+{% endmacro %}
+
+{% macro evaluation_formation_annual_interview_macro(form) %}
+    <div class="row macro-evaluation-formation-annual-interview">
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.formation,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Formation'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.employeeAppreciation,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Appréciation salarié'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.employeeComment,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Commentaire salarié'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.managerAppreciation,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Appréciation manager'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                {{ form_widget(form.managerComment,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Commentaire manager'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <button class="btn btn-default btn-circle remove-evaluation-formation-annual-interview" type="button">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+{% endmacro %}
+
+{% macro formation_desired_annual_interview_macro(form) %}
+    <div class="row macro-formation-desired-annual-interview">
+        <div class="col-md-3">
+            <div class="form-group">
+                {{ form_widget(form.formationType,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Type de formation'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_widget(form.description,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Description'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                {{ form_widget(form.applicant,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Demandeur'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-1">
+            <div class="form-group">
+                <button class="btn btn-default btn-circle remove-formation-desired-annual-interview" type="button">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+{% endmacro %}
+
+{% macro goal_annual_interview_macro(form) %}
+    <div class="row macro-goal-annual-interview">
+        <div class="col-md-5">
+            <div class="form-group">
+                {{ form_widget(form.wordingGoal,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Objectif'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                {{ form_widget(form.goalAchieve,{
+                    'attr': {
+                        'class': 'form-control',
+                        'placeholder' : 'Objectif à atteindre	'
+                    }
+                }) }}
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <button class="btn btn-default btn-circle remove-goal-annual-interview" type="button">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+{% endmacro %}

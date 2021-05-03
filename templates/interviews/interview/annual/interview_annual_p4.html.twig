@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %}
+{% import 'interviews/macros/macros.html.twig' as macro %}
+
+{% block title %}Entretien annuel{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block addShowInterviews %}active{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/interviews/ai/ai-p4.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien Annuel</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('choice_interviews') }}">Vos entretiens</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_p1') }}?ai_id={{ ai.id }}">Informations</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_p2', {id: ai.id}) }}">Bilan</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_p3', {id: ai.id}) }}">Compétences</a>
+                </li>
+                <li class="active">
+                    <strong>Formations</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Formations effectuées dans l'année</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <label class="control-label">Année</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Formation</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Début</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Fin</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Durée</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Organisme</label>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="control-label">Action</label>
+                        </div>
+                    </div>
+
+                    <div id="content_formation_annual_interview">
+                        {% for formationAnnualInterviewForm in form.formationAnnualInterview %}
+                            {{ macro.formation_annual_interview_macro(formationAnnualInterviewForm) }}
+                        {% endfor %}
+                    </div>
+
+                    <button type="button" class="btn btn-outline btn-link" id="add_formation_annual_interview"
+                            data-prototype="{{ macro.formation_annual_interview_macro(form.formationAnnualInterview.vars.prototype)|e('html_attr') }}"
+                            data-index="{{ form.formationAnnualInterview|length }}">
+                        <i class="fa fa-plus"></i> Ajouter une formation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Evaluation des formations effectuées</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">Formation</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Appréciation salarié</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Commentaire salarié</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Appréciation manager</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Commentaire manager</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Action</label>
+                        </div>
+                    </div>
+
+                    <div id="content_evaluation_formation_annual_interview">
+                        {% for evalutationFormationAnnualInterviewForm in form.evaluationFormationAnnualInterviews %}
+                            {{ macro.evaluation_formation_annual_interview_macro(evalutationFormationAnnualInterviewForm) }}
+                        {% endfor %}
+                    </div>
+
+                    <button type="button" class="btn btn-outline btn-link" id="add_evaluation_formation_annual_interview"
+                            data-prototype="{{ macro.evaluation_formation_annual_interview_macro(form.evaluationFormationAnnualInterviews.vars.prototype)|e('html_attr') }}"
+                            data-index="{{ form.evaluationFormationAnnualInterviews|length }}">
+                        <i class="fa fa-plus"></i> Ajouter une évaluation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Formation souhaitées</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="control-label">Type de formation</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">Description</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="control-label">Demandeur (Salarié / Manager)</label>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="control-label">Action</label>
+                        </div>
+                    </div>
+
+                    <div id="content_formation_desired_annual_interview">
+                        {% for formationDesiredAnnualInterviewsForm in form.formationDesiredAnnualInterviews %}
+                            {{ macro.formation_desired_annual_interview_macro(formationDesiredAnnualInterviewsForm) }}
+                        {% endfor %}
+                    </div>
+
+                    <button type="button" class="btn btn-outline btn-link" id="add_formation_desired_annual_interview"
+                            data-prototype="{{ macro.formation_desired_annual_interview_macro(form.formationDesiredAnnualInterviews.vars.prototype)|e('html_attr') }}"
+                            data-index="{{ form.formationDesiredAnnualInterviews|length }}">
+                        <i class="fa fa-plus"></i> Ajouter une formation souhaitée
+                    </button>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                {{ form_widget(form.submit,{'label': 'Etape suivante', 'attr': {'class': 'btn btn-primary'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: none">
+                        {{ form_rest(form, {'render_rest': false}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

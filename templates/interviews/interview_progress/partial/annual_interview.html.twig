@@ -1,0 +1,42 @@
+<div class="table-responsive pagination-array" data-nav="annual">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Créer</th>
+            <th>Valider</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for interview in data %}
+            <tr>
+                <td>{{ interview.employee.lastName }}</td>
+                <td>{{ interview.employee.firstname }}</td>
+                <td>{{ interview.createdAt|date('d/m/Y') }}</td>
+                <td>{{ interview.ownInterviewValidated|date('d/m/Y') }}</td>
+                <td>
+                    <a href="{{ path('interview_annual_in_progress_p1', {id: interview.id}) }}">
+                        <button class="btn btn-primary " type="button">
+                            <i class="fa fa-paste"></i> Passer
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        {% if data|length == 0 %}
+            <tr>
+                <td colspan="5">Aucun résultat</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <div class="pagination-array" data-nav="annual">
+        {% include 'pagination/pagination.html.twig' with {
+            'pagination' : pagination
+        } %}
+    </div>
+</div>

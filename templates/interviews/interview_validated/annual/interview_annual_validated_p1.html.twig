@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretien annuel validé{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block validatedInterviews %}active{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien annuel - {{ ai.employee.fullname }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('interview_validated_list') }}">Entretiens validés</a>
+                </li>
+                <li class="active">
+                    <strong>Informations</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Informations</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Nom du salairé</label>
+                                <input type="text" value="{{ ai.employee.lastName }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Prénom du salairé</label>
+                                <input type="text" value="{{ ai.employee.firstName }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date de naissance</label>
+                                <input type="text" value="{{ ai.employee.birthday ? ai.employee.birthday|date('d/m/Y') : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date d'entrée</label>
+                                <input type="text" value="{{ ai.employee.dateEntered ? ai.employee.dateEntered|date('d/m/Y') : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Intitulé de poste (contrat de travail)</label>
+                                <input type="text" value="{{ ai.jobTitle }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Fonction actuelle</label>
+                                <input type="text" value="{{ ai.currentFunction }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Ancienneté dans la fonction</label>
+                                <input type="text" value="{{ ai.functionSeniority }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Affectation</label>
+                                <input type="text" value="{{ ai.affectation }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Manager N+1</label>
+                                <input type="text" value="{{ ai.manager ? ai.manager.fullname : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Manager N+2</label>
+                                <input type="text" value="{{ secondManager ? secondManager.fullName : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Manager fonctionnel</label>
+                                <input type="text" value="{{  managerFunc ? managerFunc.fullName : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date du précédent entretien annuel</label>
+                                <input type="text" value="{{ prevAi ? prevAi.interviewValidated | date('d/m/Y') : "Aucun entretien précédent n'a été trouvé" }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Mené par</label>
+                                <input type="text" value="{{ prevAi ? prevAi.leadBy.fullname : "Aucun entretien précédent n'a été trouvé" }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Evaluation précédente</label>
+                                <div>
+                                    {% if prevAi %}
+                                        <a href="{{ path('show_interview_annual_validated', {id: prevAi.id, step: 1}) }}" target="_blank">
+                                            Entretien annuel {{ prevAi.createdAt | date('Y') }}
+                                        </a>
+                                    {% else %}
+                                        <input type="text" value="Aucun entretien précédent n'a été trouvé" class="form-control" disabled>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date l'entretien</label>
+                                <input type="text" value="{{ ai.interviewDate ? ai.interviewDate|date('d/m/Y') : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Mené par</label>
+                                <input type="text" value="{{ ai.leadBy.fullName }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                <a href="{{ path('show_interview_annual_validated', {id : ai.id, step: 2}) }}">
+                                    <button class="btn btn-primary" type="button">Etape suivante</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

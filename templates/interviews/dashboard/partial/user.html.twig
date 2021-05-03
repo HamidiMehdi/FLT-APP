@@ -1,0 +1,54 @@
+<div class="table-responsive" id="pagination_array_user">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Rôles</th>
+                <th>Dernière connexion</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in data %}
+            <tr>
+                <td class="last_name_user_{{ user.id }}">{{ user.lastname }}</td>
+                <td class="first_name_user_{{ user.id }}">{{ user.firstname }}</td>
+                <td>
+                    <span class="label label-primary">Collaborateur</span>
+                    {% if user.isManager %}
+                    <span class="label label-info">Manager</span>
+                    {% endif %}
+                    {% if user.isAdmin %}
+                    <span class="label label-success">Administrateur</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.lastConnection %}
+                        {{ user.lastConnection|date('d/m/Y H:i') }}
+                    {% else %}
+                        Aucune connexion
+                    {% endif %}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-delete-user" data-user="{{ user.id }}">
+                        <i class="fa fa-trash-o"></i>&nbsp;Supprimer
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+
+        {% if data|length == 0 %}
+            <tr>
+                <td colspan="5">Aucun résultat</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    {% include 'pagination/pagination.html.twig' with {
+        'pagination' : pagination
+    } %}
+</div>
+
+

@@ -1,0 +1,65 @@
+<div class="table-responsive pagination-array" id="working_request_list">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date de début</th>
+            <th>Période</th>
+            <th>Date de fin</th>
+            <th>Période</th>
+            <th>Jour</th>
+            <th>Statut</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for working in data %}
+            <tr>
+                <td>{{ working.employee.lastName }}</td>
+                <td>{{ working.employee.firstName }}</td>
+                <td>{{ working.startAt|date('d/m/Y') }}</td>
+                <td>{{ working.periodStartAt == 'AM' ? 'Matin' : 'Après-midi' }}</td>
+                <td>{{ working.endAt|date('d/m/Y') }}</td>
+                <td>{{ working.periodEndAt == 'AM' ? 'Matin' : 'Après-midi' }}</td>
+                <td>{{ working.getDaysInterval() }}</td>
+                <td>
+                    {% if working.decidedBy is not null and working.isAccepted and working.decision is not null %}
+                        <span class="label label-primary">Accepté</span>
+                        {% if working.reportRequest and (working.report is null or working.report == '') %}
+                            <span class="label label-warning">Compte rendu à fournir</span>
+                        {% endif %}
+                    {% elseif working.decidedBy is not null and working.isAccepted == false and working.decision is not null %}
+                        <span class="label label-danger">Refusé</span>
+                    {% else %}
+                        <span class="label label-default">En attente</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if working.decidedBy is null and working.decision is null %}
+                        <a class="btn btn-primary btn-sm btn-bitbucket" href="{{ path('working_request_show', {id: working.id}) }}">
+                            Afficher
+                        </a>
+                    {% else %}
+                        <a class="btn btn-primary btn-sm btn-bitbucket" href="{{ path('show_working', {id: working.id}) }}">
+                            Afficher
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+
+        {% if data|length == 0 %}
+            <tr>
+                <td colspan="9">Aucun résultat</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <div class="pagination-array">
+        {% include 'pagination/pagination.html.twig' with {
+            'pagination' : pagination
+        } %}
+    </div>
+</div>

@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretien professionnel{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block addShowInterviews %}active{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/interviews/pi/pi-p3.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien professionnel</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('choice_interviews') }}">Vos entretiens</a>
+                </li>
+                <li class="active">
+                    <a href="{{ path('interview_pro_p1') }}?pi_id={{ pi.id }}">Informations</a>
+                </li>
+                <li class="active">
+                    <a href="{{ path('interview_pro_p2', {'id' : pi.id}) }}">Plan individuel</a>
+                </li>
+                <li>
+                    <strong>Signature</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    {# form #}
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Signature</h5>
+                </div>
+                <div class="ibox-content">
+                    {{ form_start(form) }}
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Appréciation du salarié</label>
+                                {{ form_widget(form.employeeOpinion, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_widget(form.employeeSignature) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date de signature</label>
+                                <input type="text" value="{{ dateNow | date('d/m/Y') }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Signature</label>
+                                <div class="signature-zone">
+                                    <canvas id="canvas" width="400" height="175"></canvas>
+                                </div>
+                                <div class="error-field-txt">La signature est obligatoire</div>
+                                <a class="btn btn-default btn-facebook btn-outline" id="clear_canvas">
+                                    <i class="fa fa-edit"> </i> Effacer la signature
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                <button id="open_popup_pi" type="button" class="btn btn-primary right">Valider l'entretien</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {# modal validation entretien #}
+    <div class="modal inmodal fade" id="modal_validation_interview" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span
+                                class="sr-only">Fermer</span></button>
+                    <h4 class="modal-title">Valider votre entretien</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Vous êtes sur le point de valider votre entretien.
+                    </p>
+                    <p>
+                        Il est recommandé de renseigner la <strong>totalité</strong> des informations demandées pour
+                        le bon déroulement de votre entretien.
+                    </p>
+                    <p>
+                        Vous pourrez toujours modifier votre entretien tant que vos managers ne l'auront pas validé.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Retour</button>
+                    <button type="button" class="btn btn-primary" id="validation_interview">Valider</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

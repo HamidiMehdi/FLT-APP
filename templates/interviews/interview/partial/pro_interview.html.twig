@@ -1,0 +1,54 @@
+<div class="table-responsive pagination-array" data-nav="professional">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Valider</th>
+            <th>Manager</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for interview in data %}
+            <tr>
+                <td>{{ interview.employee.lastName }}</td>
+                <td>{{ interview.employee.firstname }}</td>
+                <td>
+                    {% if interview.interviewValidated %}
+                        {{ interview.interviewValidated|date('d/m/Y') }}
+                    {% else %}
+                        Date non existante
+                    {% endif %}
+                </td>
+                <td>
+                    {% if interview.leadBy %}
+                        {{ interview.leadBy.lastname }} {{ interview.leadBy.firstname }}
+                    {% else %}
+                        Manager non trouvé
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('download_pro_interview', {id: interview.id}) }}">
+                        <button class="btn btn-primary " type="button">
+                            <i class="fa fa-upload"></i>
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        {% if data|length == 0 %}
+            <tr>
+                <td colspan="5">Aucun résultat</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <div class="pagination-array" data-nav="professional">
+        {% include 'pagination/pagination.html.twig' with {
+            'pagination' : pagination
+        } %}
+    </div>
+</div>

@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+{% import 'interviews/macros/macros.html.twig' as macro %}
+
+{% block title %}Entretien annuel en cours{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block interviewInProgress %}active{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/interviews/ai/ai-p5.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien Annuel - {{ ai.employee.fullname }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('interview_in_progress_list') }}">Entretiens en cours</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p1', {id : ai.id}) }}">Informations</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p2', {id : ai.id}) }}">Bilan</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p3', {id : ai.id}) }}">Compétences</a>
+                </li>
+                <li>
+                    <a href="{{ path('interview_annual_in_progress_p4', {id : ai.id}) }}">Formations</a>
+                </li>
+                <li class="active">
+                    <strong>Objectifs</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    {{ form_start(form) }}
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Objectifs pour l'année a venir</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <label class="control-label">Libellé de l'objectif</label>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="control-label">Objectif à atteindre</label>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="control-label">Action</label>
+                        </div>
+                    </div>
+
+                    <div id="content_goal_annual_interview">
+                        {% for goalAnnualInterviewsForm in form.goalAnnualInterviews %}
+                            {{ macro.goal_annual_interview_macro(goalAnnualInterviewsForm) }}
+                        {% endfor %}
+                    </div>
+
+                    <button type="button" class="btn btn-outline btn-link" id="add_goal_annual_interview"
+                            data-prototype="{{ macro.goal_annual_interview_macro(form.goalAnnualInterviews.vars.prototype)|e('html_attr') }}"
+                            data-index="{{ form.goalAnnualInterviews|length }}">
+                        <i class="fa fa-plus"></i> Ajouter un objectif
+                    </button>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                {{ form_widget(form.submit,{'label': 'Etape suivante', 'attr': {'class': 'btn btn-primary'}}) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: none">
+                        {{ form_rest(form, {'render_rest': false}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

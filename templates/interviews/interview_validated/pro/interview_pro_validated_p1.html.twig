@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entretien professionnel validé{% endblock %}
+
+{% block interview_item %}active{% endblock %}
+{% block validatedInterviews %}active{% endblock %}
+
+{% block body %}
+
+    {# breadcrumbs #}
+    <div class="row wrapper border-bottom white-bg page-heading margin-bottom-30">
+        <div class="col-sm-12">
+            <h2>Entretien professionnel - {{ pi.employee.fullname }}</h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a href="{{ path('interview_validated_list') }}">Entretiens validés</a>
+                </li>
+                <li class="active">
+                    <strong>Informations</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    {# form #}
+    <div class="row margin-bottom-30">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins border-bottom">
+                <div class="ibox-title">
+                    <h5>Informations</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Nom du salairé</label>
+                                <input type="text" value="{{ pi.employee.lastName }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Prénom du salairé</label>
+                                <input type="text" value="{{ pi.employee.firstName }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date de naissance</label>
+                                <input type="text" value="{{ pi.employee.birthday ? pi.employee.birthday|date('d/m/Y') : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date d'entrée</label>
+                                <input type="text" value="{{ pi.employee.dateEntered ? pi.employee.dateEntered|date('d/m/Y') : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Intitulé de poste (contrat de travail)</label>
+                                <input type="text" value="{{ pi.jobTitle }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Fonction actuelle</label>
+                                <input type="text" value="{{ pi.currentFunction }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Ancienneté dans la fonction</label>
+                                <input type="text" value="{{ pi.functionSeniority }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Affectation</label>
+                                <input type="text" value="{{ pi.affectation }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Manager N+1</label>
+                                <input type="text" value="{{ pi.manager ? pi.manager.fullname : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Manager N+2</label>
+                                <input type="text" value="{{ pi.secondManage ? pi.secondManage.fullName : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Manager fonctionnel</label>
+                                <input type="text" value="{{  managerFunc ? managerFunc.fullName : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Date de l'entretien</label>
+                                <input type="text" value="{{ pi.interviewDate ? pi.interviewDate|date('d/m/Y') : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Menée par</label>
+                                <input type="text" value="{{ pi.leadBy ? pi.leadBy.fullName : '' }}" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group text-right">
+                                <a href="{{ path('show_interview_pro_validated', {id : pi.id, step: 2}) }}">
+                                    <button class="btn btn-primary" type="button">Etape suivante</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
